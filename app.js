@@ -7,13 +7,13 @@ const app = {
             .addEventListener('submit', this.handlesubmit.bind(this))
     },
 
-    renderListItem: function(flick) {
+    renderListItem(flick) {
         const item = document.createElement('li')
         item.textContent = flick.name
         return item
     },
 
-    handlesubmit: function(ev) {
+    handlesubmit(ev) {
         ev.preventDefault()
         const f = ev.target
         const flick = {
