@@ -11,9 +11,10 @@ const app = {
     renderListItem(flick) {
         const item = document.createElement('li')
         item.textContent = flick.name
-        const button = this.renderLikeButton()
-        item.appendChild(button)
-        item.setAttribute("onclick", "this.style.backgroundColor = '#ffae00'")
+        const likebutton = this.renderLikeButton()
+        const removebutton = this.renderRemoveButton()
+        item.appendChild(likebutton)
+        item.appendChild(removebutton)
         return item
     },
 
@@ -21,6 +22,15 @@ const app = {
         const button = document.createElement("button")
         button.setAttribute("class", "warning button")
         button.innerHTML = "Like"
+        button.setAttribute("onclick", "this.parentElement.style.backgroundColor = '#ffae00'")
+        return button
+    },
+
+    renderRemoveButton() {
+        const button = document.createElement("button")
+        button.setAttribute("class", "alert button")
+        button.innerHTML = "DELETE"
+        button.setAttribute("onclick", "this.parentElement.parentElement.removeChild(this.parentElement)")
         return button
     },
 
