@@ -1,0 +1,8 @@
+#flick-list li {
+    height: 38.875px;
+}
+
+#flick-list button {
+    border: 3px;
+    align-content: space-around;
+}
