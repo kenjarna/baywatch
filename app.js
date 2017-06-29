@@ -23,6 +23,7 @@ const app = {
         item.appendChild(upbutton)
         item.appendChild(downbutton)
         item.appendChild(removebutton)
+        console.log(this.flick_array)
         return item
     },
 
@@ -75,7 +76,7 @@ const app = {
                 const x = this.flick_array[index - 1]
                 this.flick_array[index] = x
                 this.flick_array[index - 1] = t
-
+                console.log(this.flick_array)
             }
         }.bind(this))
 
