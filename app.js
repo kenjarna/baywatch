@@ -11,14 +11,15 @@ const app = {
     renderListItem(flick) {
         const item = document.createElement('li')
         item.textContent = flick.name
-        item.appendChild(this.renderLikeButton())
+        const button = this.renderLikeButton()
+        item.appendChild(button)
+        item.setAttribute("onclick", "this.style.backgroundColor = '#ffae00'")
         return item
     },
 
     renderLikeButton() {
         const button = document.createElement("button")
         button.setAttribute("class", "warning button")
-        button.setAttribute("onclick", "document.querySelector('li').style.backgroundColor = '#ffae00'")
         button.innerHTML = "Like"
         return button
     },
