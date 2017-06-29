@@ -103,6 +103,7 @@ const app = {
         this.flick_array.push(flick)
         this.list.appendChild(listItem)
         this.max++
+            f.reset()
     },
 }
 
