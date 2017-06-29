@@ -3,6 +3,7 @@ const app = {
         this.max = 0
         this.flick_array = []
         this.list = document.querySelector(selectors.listSelector)
+        this.template = document.querySelector(selectors.templateSelector)
         document
             .querySelector(selectors.formSelector)
             .addEventListener('submit', this.handlesubmit.bind(this))
@@ -10,9 +11,13 @@ const app = {
     },
 
     renderListItem(flick) {
-        const item = document.createElement('li')
-        item.textContent = flick.name
+        const item = this.template.cloneNode(true)
+        item.classList.remove('template')
         item.dataset.flickname = flick.name
+        item
+            .querySelector('.flick-name')
+            .textContent = flick.name
+
 
         const likebutton = this.renderLikeButton()
         const removebutton = this.renderRemoveButton()
@@ -111,4 +116,5 @@ const app = {
 app.init({
     formSelector: 'form#flick-form',
     listSelector: '#flick-list',
+    templateSelector: '.flick.template',
 })

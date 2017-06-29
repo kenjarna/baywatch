@@ -2,6 +2,10 @@
     margin-bottom: 0;
 }
 
+.template {
+    display: none;
+}
+
 .flick-name {
     padding: 0 0.75rem;
 }
