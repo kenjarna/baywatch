@@ -20,6 +20,13 @@ const app = {
         this.flick_array.splice(index, 1)
     },
 
+    favFlick(flick, ev) {
+        const listItem = ev.target.closest('.flick')
+        flick.fav = listItem.classList.toggle('fav')
+
+
+    },
+
     renderListItem(flick) {
         const item = this.template.cloneNode(true)
         item.classList.remove('template')
@@ -35,10 +42,16 @@ const app = {
                 this.removeFlick.bind(this, flick)
             )
 
-        // const likebutton = this.renderLikeButton()
-        // const removebutton = this.renderRemoveButton()
-        // const upbutton = this.renderUpButton()
-        // const downbutton = this.renderDownButton()
+        item
+            .querySelector('button.fav')
+            .addEventListener(
+                'click',
+                this.favFlick.bind(this, flick)
+            )
+            // const likebutton = this.renderLikeButton()
+            // const removebutton = this.renderRemoveButton()
+            // const upbutton = this.renderUpButton()
+            // const downbutton = this.renderDownButton()
 
         // item.appendChild(likebutton)
         // item.appendChild(upbutton)
@@ -118,6 +131,7 @@ const app = {
         const flick = {
             id: this.max + 1,
             name: f.flickName.value,
+            fav: 'false'
         }
 
         const listItem = this.renderListItem(flick)

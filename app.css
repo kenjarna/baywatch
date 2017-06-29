@@ -22,3 +22,7 @@
 .flick .button-group .button {
     margin-bottom: 0;
 }
+
+.flick.fav {
+    background-color: cornflowerblue;
+}
