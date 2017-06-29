@@ -100,10 +100,11 @@ const app = {
         }
 
         const listItem = this.renderListItem(flick)
-        this.flick_array.push(flick)
-        this.list.appendChild(listItem)
+        this.flick_array.unshift(flick)
+        this.list.insertBefore(listItem, this.list.firstElementChild)
         this.max++
             f.reset()
+
     },
 }
 
