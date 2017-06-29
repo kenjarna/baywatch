@@ -1,8 +1,20 @@
-#flick-list li {
-    height: 38.875px;
+#flick-list {
+    margin-bottom: 0;
+}
+
+.flick-name {
+    padding: 0 0.75rem;
+}
+
+.flick .button-group {
+    margin-bottom=0;
 }
 
 #flick-list button {
     border: 3px;
     align-content: space-around;
+}
+
+.flick .button-group .button {
+    margin-bottom: 0;
 }
