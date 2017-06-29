@@ -10,25 +10,41 @@ const app = {
 
     },
 
+    removeFlick(flick, ev) {
+        //remove from the DOM
+        const listitem = ev.target.closest('.flick')
+        listitem.remove()
+
+        //remove from the array
+        const index = this.flick_array.indexOf(flick)
+        this.flick_array.splice(index, 1)
+    },
+
     renderListItem(flick) {
         const item = this.template.cloneNode(true)
         item.classList.remove('template')
-        item.dataset.flickname = flick.name
+        item.dataset.id = flick.id
         item
             .querySelector('.flick-name')
             .textContent = flick.name
 
+        item
+            .querySelector('button.remove')
+            .addEventListener(
+                'click',
+                this.removeFlick.bind(this, flick)
+            )
 
-        const likebutton = this.renderLikeButton()
-        const removebutton = this.renderRemoveButton()
-        const upbutton = this.renderUpButton()
-        const downbutton = this.renderDownButton()
+        // const likebutton = this.renderLikeButton()
+        // const removebutton = this.renderRemoveButton()
+        // const upbutton = this.renderUpButton()
+        // const downbutton = this.renderDownButton()
 
-        item.appendChild(likebutton)
-        item.appendChild(upbutton)
-        item.appendChild(downbutton)
-        item.appendChild(removebutton)
-        console.log(this.flick_array)
+        // item.appendChild(likebutton)
+        // item.appendChild(upbutton)
+        // item.appendChild(downbutton)
+        // item.appendChild(removebutton)
+
         return item
     },
 
@@ -56,7 +72,7 @@ const app = {
             const listelement = ev.target.parentElement
             const flickname = listelement.dataset.flickname
             const index = this.flick_array.findIndex(function(flick) {
-                return flickname === flick.name
+                return flickname === flick.id
             })
             this.flick_array.splice(index, 1)
             listelement.parentElement.removeChild(ev.target.parentElement)
@@ -74,7 +90,7 @@ const app = {
             const listelement = ev.target.parentElement
             const flickname = listelement.dataset.flickname
             const index = this.flick_array.findIndex(function(flick) {
-                return flickname === flick.name
+                return flickname === flick.id
             })
             if (index === 0) { button.disabled } else {
                 const t = this.flick_array[index]
