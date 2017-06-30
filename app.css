@@ -1,28 +1,54 @@
-#flick-list {
-    margin-bottom: 0;
-}
-
-.template {
+.flick.template {
     display: none;
 }
 
+.actions {
+    float: right;
+}
+
+.flick {
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    transition: 0.25s;
+}
+
+.flick+.flick {
+    border-top: none;
+}
+
 .flick-name {
-    padding: 0 0.75rem;
+    flex-grow: 1;
 }
 
-.flick .button-group {
-    margin-bottom=0;
-}
-
-#flick-list button {
-    border: 3px;
-    align-content: space-around;
-}
-
-.flick .button-group .button {
+.actions.button-group {
     margin-bottom: 0;
 }
 
+.button {
+    -webkit-transition-duration: 0.4s;
+    /* For Safari */
+    transition-duration: 0.4s;
+    border-radius: 15px;
+}
+
+li {
+    font-weight: bold;
+    color: black;
+    font-size: 18px;
+    font-family: sans-serif;
+    text-align: left;
+}
+
 .flick.fav {
-    background-color: cornflowerblue;
+    background-color: yellow;
+}
+
+html {
+    background: url("baywatch2.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
