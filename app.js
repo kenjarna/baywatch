@@ -29,17 +29,34 @@ const app = {
 
     UVFlick(flick, ev) {
         const listItem = ev.target.closest('.flick')
+        console.log(listItem)
         const index = this.flick_array.indexOf(flick)
 
-        console.log(index)
-        if (index === 0) {
-            button.disabled
-        } else {
+        if (index > 0) {
             //reorder the array
             const t = this.flick_array[index]
             this.flick_array[index] = this.flick_array[index - 1]
             this.flick_array[index - 1] = t
-            console.log(this.flick_array)
+
+
+            //reorder the DOM
+            this.list.insertBefore(listItem, listItem.previousElementSibling)
+
+        }
+    },
+
+    DVFlick(flick, ev) {
+        const listItem = ev.target.closest('.flick')
+
+        const index = this.flick_array.indexOf(flick)
+
+        if (index < this.flick_array.length - 1) {
+            this.list.insertBefore(listItem.nextElementSibling, listItem)
+
+            const nextFlick = this.flick_array[index + 1]
+            this.flick_array[index + 1] = flick
+            this.flick_array[index] = nextFlick
+
         }
     },
 
@@ -71,6 +88,13 @@ const app = {
             .addEventListener(
                 'click',
                 this.UVFlick.bind(this, flick)
+            )
+
+        item
+            .querySelector('button.downvote')
+            .addEventListener(
+                'click',
+                this.DVFlick.bind(this, flick)
             )
 
         return item
@@ -121,7 +145,6 @@ const app = {
         const listItem = this.renderListItem(flick)
         this.flick_array.unshift(flick)
         this.list.insertBefore(listItem, this.list.firstElementChild)
-        console.log(this.flick_array)
         this.max++
             f.reset()
 
