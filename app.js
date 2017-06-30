@@ -27,10 +27,27 @@ const app = {
 
     },
 
+    UVFlick(flick, ev) {
+        const listItem = ev.target.closest('.flick')
+        const index = this.flick_array.indexOf(flick)
+
+        console.log(index)
+        if (index === 0) {
+            button.disabled
+        } else {
+            //reorder the array
+            const t = this.flick_array[index]
+            this.flick_array[index] = this.flick_array[index - 1]
+            this.flick_array[index - 1] = t
+            console.log(this.flick_array)
+        }
+    },
+
     renderListItem(flick) {
         const item = this.template.cloneNode(true)
         item.classList.remove('template')
         item.dataset.id = flick.id
+
         item
             .querySelector('.flick-name')
             .textContent = flick.name
@@ -48,53 +65,23 @@ const app = {
                 'click',
                 this.favFlick.bind(this, flick)
             )
-            // const likebutton = this.renderLikeButton()
-            // const removebutton = this.renderRemoveButton()
-            // const upbutton = this.renderUpButton()
-            // const downbutton = this.renderDownButton()
 
-        // item.appendChild(likebutton)
-        // item.appendChild(upbutton)
-        // item.appendChild(downbutton)
-        // item.appendChild(removebutton)
+        item
+            .querySelector('button.upvote')
+            .addEventListener(
+                'click',
+                this.UVFlick.bind(this, flick)
+            )
 
         return item
     },
 
-    renderLikeButton() {
-        const button = document.createElement("button")
 
-        button.className += "warning button"
-        button.innerHTML = "Like"
-        button.addEventListener('click', function() {
-            if (this.parentElement.style.backgroundColor === 'rgb(255, 174, 0)') {
-                this.parentElement.style.backgroundColor = ''
-            } else {
-                this.parentElement.style.backgroundColor = '#ffae00'
-            }
-        })
-        return button
-    },
 
-    renderRemoveButton() {
-        const button = document.createElement("button")
-        button.className += "alert button"
-        button.innerHTML = "DELETE"
-
-        button.addEventListener('click', function(ev) {
-            const listelement = ev.target.parentElement
-            const flickname = listelement.dataset.flickname
-            const index = this.flick_array.findIndex(function(flick) {
-                return flickname === flick.id
-            })
-            this.flick_array.splice(index, 1)
-            listelement.parentElement.removeChild(ev.target.parentElement)
-        }.bind(this))
-        return button
-    },
 
     renderUpButton() {
 
+        //use previousSibling and insertBefore functions!!
         const button = document.createElement("button")
         button.className += "primary button"
         button.innerHTML = "Up Vote"
@@ -102,15 +89,12 @@ const app = {
         button.addEventListener('click', function(ev) {
             const listelement = ev.target.parentElement
             const flickname = listelement.dataset.flickname
-            const index = this.flick_array.findIndex(function(flick) {
-                return flickname === flick.id
-            })
+
             if (index === 0) { button.disabled } else {
                 const t = this.flick_array[index]
                 const x = this.flick_array[index - 1]
                 this.flick_array[index] = x
                 this.flick_array[index - 1] = t
-                console.log(this.flick_array)
             }
         }.bind(this))
 
@@ -137,6 +121,7 @@ const app = {
         const listItem = this.renderListItem(flick)
         this.flick_array.unshift(flick)
         this.list.insertBefore(listItem, this.list.firstElementChild)
+        console.log(this.flick_array)
         this.max++
             f.reset()
 
