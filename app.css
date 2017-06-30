@@ -45,6 +45,10 @@ li {
     background-color: yellow;
 }
 
+.button:focus {
+    outline: 0;
+}
+
 html {
     background: url("baywatch2.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
