@@ -65,13 +65,20 @@ const app = {
         const listItem = ev.target.closest('.flick')
         const spanItem = listItem.querySelector('span#flick-name')
         const editable = spanItem.getAttribute('contenteditable')
+        const index = this.flick_array.indexOf(flick)
+
 
         if (editable === 'false') {
             spanItem.setAttribute('contenteditable', 'true')
             spanItem.focus()
+
         } else {
             spanItem.setAttribute('contenteditable', 'false')
         }
+
+        //Reset the array to new flickName
+        flick.name = spanItem.textContent
+        this.flick_array[index] = flick
 
         //Handle an empty item
         if (spanItem.textContent === '') {
@@ -81,6 +88,7 @@ const app = {
             const index = this.flick_array.indexOf(flick)
             this.flick_array.splice(index, 1)
         }
+        this.save()
     },
 
     renderListItem(flick) {
