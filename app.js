@@ -4,11 +4,11 @@ const app = {
         this.flick_array = []
         this.list = document.querySelector(selectors.listSelector)
         this.template = document.querySelector(selectors.templateSelector)
-        this.flick_name = document.querySelector(selectors.flick_nameSelector)
         document
             .querySelector(selectors.formSelector)
-            .addEventListener('submit', this.handlesubmit.bind(this))
+            .addEventListener('submit', this.handleFormSubmit.bind(this))
 
+        this.load()
     },
 
     removeFlick(flick, ev) {
@@ -19,18 +19,18 @@ const app = {
         //remove from the array
         const index = this.flick_array.indexOf(flick)
         this.flick_array.splice(index, 1)
+
+        this.save()
     },
 
     favFlick(flick, ev) {
         const listItem = ev.target.closest('.flick')
         flick.fav = listItem.classList.toggle('fav')
-
-
+        this.save()
     },
 
     upvoteFlick(flick, ev) {
         const listItem = ev.target.closest('.flick')
-        console.log(listItem)
         const index = this.flick_array.indexOf(flick)
 
         if (index > 0) {
@@ -41,6 +41,7 @@ const app = {
 
             //reorder the DOM
             this.list.insertBefore(listItem, listItem.previousElementSibling)
+            this.save()
         }
     },
 
@@ -55,7 +56,9 @@ const app = {
             const nextFlick = this.flick_array[index + 1]
             this.flick_array[index + 1] = flick
             this.flick_array[index] = nextFlick
+            this.save()
         }
+
     },
 
     editFlick(flick, ev) {
@@ -65,10 +68,18 @@ const app = {
 
         if (editable === 'false') {
             spanItem.setAttribute('contenteditable', 'true')
-
+            spanItem.focus()
         } else {
             spanItem.setAttribute('contenteditable', 'false')
+        }
 
+        //Handle an empty item
+        if (spanItem.textContent === '') {
+            listItem.remove()
+
+            //remove from the array
+            const index = this.flick_array.indexOf(flick)
+            this.flick_array.splice(index, 1)
         }
     },
 
@@ -119,21 +130,47 @@ const app = {
         return item
     },
 
-    handlesubmit(ev) {
+    save() {
+        localStorage.setItem('flick_array', JSON.stringify(this.flick_array))
+    },
+
+    load() {
+        //load JSON from local storage
+        const flickJSON = localStorage.getItem('flick_array')
+        console.log(flickJSON)
+
+        const flickArray = JSON.parse(flickJSON)
+        console.log(flickArray)
+
+        // set flick_array with JSON flicks
+        flickArray
+            .reverse()
+            .map(this.handlesubmit.bind(this))
+    },
+
+    handlesubmit(flick) {
+
+        const listItem = this.renderListItem(flick)
+        this.list.insertBefore(listItem, this.list.firstElementChild)
+
+        this.flick_array.unshift(flick)
+        this.save()
+        this.max++
+
+    },
+
+    handleFormSubmit(ev) {
         ev.preventDefault()
-        const f = ev.target
+
         const flick = {
             id: this.max + 1,
-            name: f.flickName.value,
+            name: ev.target.flickName.value,
             fav: 'false',
         }
 
-        const listItem = this.renderListItem(flick)
-        this.flick_array.unshift(flick)
-        this.list.insertBefore(listItem, this.list.firstElementChild)
-        this.max++
-            f.reset()
+        this.handlesubmit(flick)
 
+        ev.target.reset()
     },
 }
 
@@ -141,5 +178,4 @@ app.init({
     formSelector: 'form#flick-form',
     listSelector: '#flick-list',
     templateSelector: '.flick.template',
-    flick_nameSelector: 'span#flick-name'
 })
