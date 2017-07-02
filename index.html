@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.0/css/foundation.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="app.css">
+    <link rel="icon" href="http://www.freeiconspng.com/uploads/explosion-icon-20.png">
 
 </head>
 
@@ -17,9 +18,10 @@
     <div class="grid-x">
         <div class="medium-8 medium-offset-2 cell">
             <h1>Baywatch</h1>
-            <form id="flick-form">
+            <form id="flick-form" autocomplete="off">
                 <div class="input-group">
                     <input type="text" class="input-group-field" name="flickName" placeholder="Submit a Movie" autofocus required>
+
                     <div class="input-group-button">
                         <button type="submit" class="success button">
                                 
@@ -28,10 +30,11 @@
                     </div>
                 </div>
             </form>
+            <input class="searchbar" type="text" name="search" placeholder="Search for a movie...">
         </div>
         <div class="medium-8 medium-offset-2 cell">
             <ul id="flick-list" class="no-bullet">
-                <li class="template flick grid-x align-middle">
+                <li class="template flick grid-x align-middle animated fadeInDown">
                     <span id="flick-name" class="flick-name auto cell" contenteditable="false"></span>
                     <span class="actions button-group"> 
                         <button class="fav button warning"><i class="material-icons">thumb_up</i></button>
