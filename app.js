@@ -4,6 +4,7 @@ const app = {
         this.flick_array = []
         this.list = document.querySelector(selectors.listSelector)
         this.template = document.querySelector(selectors.templateSelector)
+        this.flick_name = document.querySelector(selectors.flick_nameSelector)
         document
             .querySelector(selectors.formSelector)
             .addEventListener('submit', this.handlesubmit.bind(this))
@@ -27,7 +28,7 @@ const app = {
 
     },
 
-    UVFlick(flick, ev) {
+    upvoteFlick(flick, ev) {
         const listItem = ev.target.closest('.flick')
         console.log(listItem)
         const index = this.flick_array.indexOf(flick)
@@ -38,14 +39,12 @@ const app = {
             this.flick_array[index] = this.flick_array[index - 1]
             this.flick_array[index - 1] = t
 
-
             //reorder the DOM
             this.list.insertBefore(listItem, listItem.previousElementSibling)
-
         }
     },
 
-    DVFlick(flick, ev) {
+    downvoteFlick(flick, ev) {
         const listItem = ev.target.closest('.flick')
 
         const index = this.flick_array.indexOf(flick)
@@ -56,6 +55,19 @@ const app = {
             const nextFlick = this.flick_array[index + 1]
             this.flick_array[index + 1] = flick
             this.flick_array[index] = nextFlick
+        }
+    },
+
+    editFlick(flick, ev) {
+        const listItem = ev.target.closest('.flick')
+        const spanItem = listItem.querySelector('span#flick-name')
+        const editable = spanItem.getAttribute('contenteditable')
+
+        if (editable === 'false') {
+            spanItem.setAttribute('contenteditable', 'true')
+
+        } else {
+            spanItem.setAttribute('contenteditable', 'false')
 
         }
     },
@@ -87,50 +99,24 @@ const app = {
             .querySelector('button.upvote')
             .addEventListener(
                 'click',
-                this.UVFlick.bind(this, flick)
+                this.upvoteFlick.bind(this, flick)
             )
 
         item
             .querySelector('button.downvote')
             .addEventListener(
                 'click',
-                this.DVFlick.bind(this, flick)
+                this.downvoteFlick.bind(this, flick)
+            )
+
+        item
+            .querySelector('button.edit')
+            .addEventListener(
+                'click',
+                this.editFlick.bind(this, flick)
             )
 
         return item
-    },
-
-
-
-
-    renderUpButton() {
-
-        //use previousSibling and insertBefore functions!!
-        const button = document.createElement("button")
-        button.className += "primary button"
-        button.innerHTML = "Up Vote"
-
-        button.addEventListener('click', function(ev) {
-            const listelement = ev.target.parentElement
-            const flickname = listelement.dataset.flickname
-
-            if (index === 0) { button.disabled } else {
-                const t = this.flick_array[index]
-                const x = this.flick_array[index - 1]
-                this.flick_array[index] = x
-                this.flick_array[index - 1] = t
-            }
-        }.bind(this))
-
-        return button
-    },
-
-    renderDownButton() {
-        const button = document.createElement("button")
-        button.className += "secondary button"
-        button.innerHTML = "Down Vote"
-
-        return button
     },
 
     handlesubmit(ev) {
@@ -139,7 +125,7 @@ const app = {
         const flick = {
             id: this.max + 1,
             name: f.flickName.value,
-            fav: 'false'
+            fav: 'false',
         }
 
         const listItem = this.renderListItem(flick)
@@ -155,4 +141,5 @@ app.init({
     formSelector: 'form#flick-form',
     listSelector: '#flick-list',
     templateSelector: '.flick.template',
+    flick_nameSelector: 'span#flick-name'
 })
