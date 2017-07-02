@@ -4,7 +4,6 @@ const app = {
         this.flick_array = []
         this.list = document.querySelector(selectors.listSelector)
         this.template = document.querySelector(selectors.templateSelector)
-        this.search = document.querySelector(selectors.searchSelector)
         document
             .querySelector(selectors.formSelector)
             .addEventListener('submit', this.handleFormSubmit.bind(this))
@@ -84,8 +83,6 @@ const app = {
         }
     },
 
-
-
     renderListItem(flick) {
         const item = this.template.cloneNode(true)
         item.classList.remove('template')
@@ -130,26 +127,8 @@ const app = {
                 this.editFlick.bind(this, flick)
             )
 
-
         return item
     },
-
-    searchForm(flick) {
-        const input = this.search;
-        const filter = input.value.toUpperCase();
-        const listItem = this.flick_array;
-
-        // Loop through all list items, and hide those who don't match the search query
-        for (const i = 0; i < listItem.length; i++) {
-            const a = listItem[i].getElementsByTagName("a")[0];
-            if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                listItem[i].style.display = "";
-            } else {
-                listItem[i].style.display = "none";
-            }
-        }
-    },
-
 
     save() {
         localStorage.setItem('flick_array', JSON.stringify(this.flick_array))
@@ -158,7 +137,6 @@ const app = {
     load() {
         //load JSON from local storage
         const flickJSON = localStorage.getItem('flick_array')
-
         const flickArray = JSON.parse(flickJSON)
 
         // set flick_array with JSON flicks
@@ -189,7 +167,6 @@ const app = {
 
         this.handlesubmit(flick)
 
-
         ev.target.reset()
     },
 }
@@ -198,5 +175,4 @@ app.init({
     formSelector: 'form#flick-form',
     listSelector: '#flick-list',
     templateSelector: '.flick.template',
-    searchSelector: '.searchbar'
 })

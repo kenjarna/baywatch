@@ -7,7 +7,6 @@
 }
 
 .flick {
-    border: 1px solid #ddd;
     display: flex;
     align-items: center;
     padding: 0.75rem 1.25rem;
@@ -35,18 +34,33 @@
 
 li {
     font-weight: bold;
-    color: black;
+    color: whitesmoke;
     font-size: 18px;
     font-family: sans-serif;
     text-align: left;
+    border: 0;
 }
 
 .flick.fav {
-    background-color: yellow;
+    background-color: darkorange;
+    pulse_animation;
 }
 
 .button:focus {
     outline: 0;
+}
+
+h1 {
+    font-family: 'New Rocker', cursive;
+    color: whitesmoke;
+    font-size: 5rem;
+    text-align: right;
+}
+
+h2 {
+    font-family: 'Dancing Script', cursive;
+    color: whitesmoke;
+    margin: 5px 10px;
 }
 
 input[name=search] {
@@ -73,8 +87,8 @@ input[name=search]:focus {
     transition: width 0.4s ease-in-out;
 }
 
-html {
-    background: url("baywatch2.jpg") no-repeat center center fixed;
+body {
+    background: url("http://www.ultimatemovierankings.com/wp-content/uploads/2017/02/michael-bay-house.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
